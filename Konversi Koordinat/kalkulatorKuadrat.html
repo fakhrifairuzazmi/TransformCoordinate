@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Kuadrat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .form-container {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <form id="form1">
+        <label for="number1">Masukkan angka (x):</label>
+        <input type="number" id="number1" required>
+    </form>
+
+    <button type="button" onclick="calculateSquare()">Hitung Kuadrat</button>
+
+    <form id="form2">
+        <label for="number2">Hasil Kuadrat:</label>
+        <input type="number" id="number2" required>
+    </form>
+
+    <button type="button" onclick="reverseCalculation()">Balik Perhitungan</button>
+</div>
+
+<script>
+    function calculateSquare() {
+        var x = parseFloat(document.getElementById("number1").value);
+        var result = x * x;
+        document.getElementById("number2").value = result;
+    }
+
+    function reverseCalculation() {
+        var result = parseFloat(document.getElementById("number2").value);
+        var squareRoot = Math.sqrt(result);
+        document.getElementById("number1").value = squareRoot;
+    }
+</script>
+
+</body>
+</html>

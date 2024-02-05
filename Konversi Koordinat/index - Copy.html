@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta author="Fakhri">
+    <title>Konversi Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div>
+        <h1>Konversi Koordinat Geodetik ke Koordinat Kartesi</h1>
+    </div>
+
+    <!-- Bagian perhitungaan -->
+    <div class="main">
+        <div class="input">
+            <form>
+                <div class="lat">
+                    <label for="num">Latitude</label>
+                    <input type="number" id="num1">
+                </div>
+                <div class="long">
+                    <label for="num">Longitude</label>
+                    <input type="number" id="num2">
+                </div>
+                <div class="alt">
+                    <label for="num">Altitude</label>
+                    <input type="number" id="num3">
+                </div>
+                <button type="button" onclick="kartesi()">Kartesi</button>
+                <button type="button" onclick="utm()">utm</button>
+            </form>
+        </div>
+        <div class="output" id="result"></div>
+        <script>
+            Math.radians = function (degrees) {
+                return degrees * Math.PI / 180;
+            }
+            function konversi(lat, lon, alt) {
+                // konstanta
+                var a = 6378137.0;
+                var b = 6356752.3142;
+
+                var e = (((a ** 2 - b ** 2) / a ** 2));
+                var N = a / (Math.sqrt(1 - (e) * (Math.sin(Math.radians(lat)) ** 2)));
+
+                // # Konversi ke koordinat kartesian
+                var x = (N + alt) * Math.cos(Math.radians(lat)) * Math.cos(Math.radians(lon));
+                var y = (N + alt) * Math.cos(Math.radians(lat)) * Math.sin(Math.radians(lon));
+                var z = ((N * (1 - e) + alt) * Math.sin(Math.radians(lat)));
+                return { x: x, y: y, z: z, e: e, N: N };
+
+            }
+
+            function kartesi() {
+                var in1 = parseFloat(document.getElementById("num1").value);
+                var in2 = parseFloat(document.getElementById("num2").value);
+                var in3 = parseFloat(document.getElementById("num3").value);
+                var hasil = konversi(in1, in2, in3);
+
+                document.getElementById("result").innerHTML =
+                    "Koordinat Kartesian: (" + hasil.x.toFixed(2) + ", " + hasil.y.toFixed(2) + ", " + hasil.z.toFixed(2) + ")" + "<br>Nilai e: " + hasil.e.toFixed(8) + "<br>Nilai N: " + hasil.N.toFixed(4);
+
+            }
+        </script>
+
+
+    </div>
+
+</body>
+
+</html
